@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="LakhCode - Indie Experimentalist Portfolio. Building indie products and doing tech experiments."/>
+    <meta name="keywords" content="LakhCode, developer, indie, portfolio, Flutter, Firebase, web development"/>
+    <meta name="author" content="LakhCode"/>
+    <meta name="theme-color" content="#221b10"/>
+    <meta property="og:title" content="LakhCode - Indie Experimentalist Portfolio"/>
+    <meta property="og:description" content="I solve problems to build indie products and do tech experiments."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://lakhcode.com"/>
+    <title>LakhCode - Futuristic Indie Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f2930d",
+                        "primary-light": "#f5a623",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221b10",
+                        "panel-dark": "#2c241b",
+                        "border-dark": "#493922",
+                        "accent-green": "#22c55e",
+                        "accent-red": "#ef4444",
+                        "accent-blue": "#3b82f6",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #493922 1px, transparent 1px), linear-gradient(to bottom, #493922 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'shimmer': 'shimmer 2s infinite linear',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.6s ease-out forwards',
+                        'slide-down': 'slide-down 0.3s ease-out forwards',
+                        'fade-in': 'fade-in 0.5s ease-out forwards',
+                        'blink': 'blink 1s step-end infinite',
+                        'scan': 'scan 8s linear infinite',
+                        'border-flow': 'border-flow 3s linear infinite',
+                    },
+                    keyframes: {
+                        shimmer: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(100%)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-20px)' } },
+                        'glow-pulse': { '0%, 100%': { opacity: '0.5' }, '50%': { opacity: '1' } },
+                        'slide-up': { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        'slide-down': { '0%': { opacity: '0', transform: 'translateY(-10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        blink: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0' } },
+                        scan: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100%)' } },
+                        'border-flow': { '0%': { 'background-position': '0% 0%' }, '100%': { 'background-position': '200% 0%' } }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        * { scrollbar-width: thin; scrollbar-color: #493922 #221b10; }
+        *::-webkit-scrollbar { width: 6px; }
+        *::-webkit-scrollbar-track { background: #221b10; }
+        *::-webkit-scrollbar-thumb { background: #493922; border-radius: 3px; }
+        *::-webkit-scrollbar-thumb:hover { background: #f2930d; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .text-glow { text-shadow: 0 0 20px rgba(242, 147, 13, 0.4), 0 0 40px rgba(242, 147, 13, 0.2); }
+        .box-glow { box-shadow: 0 0 20px rgba(242, 147, 13, 0.1), 0 0 40px rgba(242, 147, 13, 0.05); }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+
+        .cursor-blink::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            color: #f2930d;
+        }
+
+        .glitch-text:hover { animation: glitch 0.3s ease-in-out; }
+        @keyframes glitch {
+            0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
+        }
+
+        .noise-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .progress-bar-animated {
+            background: linear-gradient(90deg, #f2930d 0%, #f5a623 50%, #f2930d 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 40px rgba(242, 147, 13, 0.1); }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: #f2930d; transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+        .particle {
+            position: absolute; width: 2px; height: 2px;
+            background: #f2930d; border-radius: 50%; pointer-events: none; opacity: 0;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; background: #221b10; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 20px; transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        .loader-bar { width: 200px; height: 3px; background: #493922; border-radius: 2px; overflow: hidden; }
+        .loader-bar-inner { height: 100%; background: #f2930d; border-radius: 2px; animation: loader 1.5s ease-in-out forwards; }
+        @keyframes loader { 0% { width: 0%; } 100% { width: 100%; } }
+
+        .tech-tag { position: relative; overflow: hidden; }
+        .tech-tag::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(242,147,13,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .tech-tag:hover::before { left: 100%; }
+
+        .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; opacity: 0; }
+        .mobile-menu.open { max-height: 400px; opacity: 1; }
+
+        .form-input:focus { border-color: #f2930d; box-shadow: 0 0 0 2px rgba(242, 147, 13, 0.2); }
+
+        #backToTop { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        #backToTop.visible { opacity: 1; visibility: visible; }
+
+        .tooltip { position: relative; }
+        .tooltip::before {
+            content: attr(data-tooltip); position: absolute; bottom: 120%; left: 50%;
+            transform: translateX(-50%); background: #2c241b; color: #f2930d;
+            padding: 4px 10px; border-radius: 4px; font-size: 11px; white-space: nowrap;
+            opacity: 0; visibility: hidden; transition: all 0.2s ease;
+            border: 1px solid #493922; font-family: 'JetBrains Mono', monospace;
+        }
+        .tooltip:hover::before { opacity: 1; visibility: visible; }
+
+        ::selection { background: rgba(242, 147, 13, 0.3); color: #fff; }
+
+        @media print { header, footer, #backToTop { display: none !important; } body { background: white !important; color: black !important; } }
+
+        /* ========================= */
+        /* MODULE CARDS              */
+        /* ========================= */
+        .module-card {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            background: #2c241b;
+            border: 1px solid #493922;
+            border-radius: 4px;
+            padding: 20px;
+            transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .module-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(242,147,13,0.06) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+        .module-card:hover { border-color: rgba(242,147,13,0.45); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(242,147,13,0.08); }
+        .module-card:hover::before { opacity: 1; }
+        .module-card:hover .card-title { color: #f2930d; }
+        .module-card:hover .card-icon { border-color: rgba(242,147,13,0.3); color: #f2930d; }
+        .module-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+        .card-title { transition: color 0.25s ease; }
+        .card-icon { transition: border-color 0.25s ease, color 0.25s ease; }
+        .card-arrow { opacity: 0; transform: translateX(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+
+        /* Extra projects — hidden by default, shown as flex-column when .is-visible */
+        .module-card.extra-card { display: none; }
+        .module-card.extra-card.is-visible { display: flex; }
+
+        /* Show more/less button — compact, matches reference image */
+        #showMoreBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 18px auto 0;
+            padding: 8px 20px;
+            background: #2c241b;
+            border: 1px solid #493922;
+            border-radius: 4px;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        #showMoreBtn:hover { border-color: rgba(242,147,13,0.45); color: #f2930d; background: rgba(242,147,13,0.05); }
+        #showMoreBtn .btn-icon { font-size: 16px; display: block; transition: transform 0.3s ease; }
+        #showMoreBtn.expanded .btn-icon { transform: rotate(180deg); }
+
+        /* ========================= */
+        /* MODAL                     */
+        /* ========================= */
+        #moduleModal {
+            display: none;
+            position: fixed; inset: 0; z-index: 1000;
+            align-items: center; justify-content: center; padding: 16px;
+        }
+        #moduleModal.open { display: flex; }
+        .modal-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.72); backdrop-filter: blur(5px);
+            animation: fade-in 0.2s ease forwards;
+        }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content {
+            position: relative; z-index: 1;
+            background: #1e1810; border: 1px solid #493922; border-radius: 12px;
+            width: 100%; max-width: 660px; max-height: 90vh; overflow-y: auto;
+            animation: modal-pop 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            scrollbar-width: thin; scrollbar-color: #493922 #1e1810;
+        }
+        @keyframes modal-pop { from { opacity: 0; transform: scale(0.93) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-header-bar {
+            background: #16120c; border-bottom: 1px solid #493922;
+            padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+            border-radius: 12px 12px 0 0; position: sticky; top: 0; z-index: 2;
+        }
+        .modal-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+        .feature-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 11px 13px; background: #2c241b;
+            border: 1px solid #493922; border-radius: 8px;
+            font-size: 13px; color: #cbd5e1; line-height: 1.4;
+        }
+        .feature-check {
+            width: 20px; height: 20px; border-radius: 50%; border: 2px solid #f2930d;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+        }
+        .feature-check svg { width: 10px; height: 10px; stroke: #f2930d; stroke-width: 3; fill: none; }
+    </style>
+</head>
+
+<body class="bg-background-dark text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden noise-bg relative">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="flex items-center gap-3 text-primary">
+            <span class="material-symbols-outlined text-3xl animate-pulse">terminal</span>
+            <h2 class="text-white text-xl font-bold tracking-widest uppercase">LakhCode</h2>
+        </div>
+        <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+        <p class="text-xs font-mono text-slate-600">Initializing system...</p>
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="sticky top-0 z-50 w-full border-b border-solid border-border-dark bg-background-dark/95 backdrop-blur-md px-4 sm:px-6 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#system" class="flex items-center gap-3 text-primary group">
+                <span class="material-symbols-outlined text-2xl animate-pulse group-hover:text-white transition-colors">terminal</span>
+                <h2 class="text-white text-lg font-bold tracking-widest uppercase">LakhCode <span class="text-primary/60 text-xs align-top">v1.0</span></h2>
+            </a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#system">System</a>
+                <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#active-process">Active</a>
+                <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#projects">Projects</a>
+                <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#tech-stack">Stack</a>
+                <!-- <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#logs">Logs</a> -->
+                <a class="nav-link text-slate-400 hover:text-primary transition-colors text-sm font-medium tracking-wide uppercase" href="#commlink">CommLink</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <!-- <div class="hidden sm:flex gap-2">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" data-tooltip="GitHub">
+                        <span class="material-symbols-outlined text-[20px]">code</span>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" data-tooltip="Twitter/X">
+                        <span class="material-symbols-outlined text-[20px]">alternate_email</span>
+                    </a>
+                    <a href="mailto:lakhtech20@gmail.com" class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" data-tooltip="Email">
+                        <span class="material-symbols-outlined text-[20px]">mail</span>
+                    </a>
+                </div> -->
+                <!-- <div class="h-6 w-px bg-border-dark mx-1 hidden sm:block"></div> -->
+                <div class="hidden sm:flex gap-2">
+                    <div class="flex items-center justify-center h-9 px-3 rounded bg-primary/10 border border-primary/20 text-primary gap-2 text-xs font-bold tracking-wider">
+                        <span class="material-symbols-outlined text-[16px]">wifi</span><span>NET: ON</span>
+                    </div>
+                    <div class="flex items-center justify-center h-9 px-3 rounded bg-panel-dark border border-border-dark text-slate-400 gap-2 text-xs font-bold tracking-wider font-mono">
+                        <span class="material-symbols-outlined text-[16px]">schedule</span>
+                        <span id="clock-time">00:00</span>
+                    </div>
+                </div>
+                <button id="menuToggle" class="md:hidden flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all">
+                    <span class="material-symbols-outlined text-[20px]" id="menuIcon">menu</span>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden border-t border-border-dark mt-3">
+            <nav class="flex flex-col py-4 gap-1">
+                <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#system" onclick="closeMobileMenu()">System</a>
+                <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#active-process" onclick="closeMobileMenu()">Active_Process</a>
+                <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#projects" onclick="closeMobileMenu()">Projects</a>
+                <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#tech-stack" onclick="closeMobileMenu()">Tech_Stack</a>
+                <!-- <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#logs" onclick="closeMobileMenu()">Logs</a>
+                 -->
+                <a class="text-slate-400 hover:text-primary hover:bg-panel-dark transition-colors text-sm font-medium tracking-wide uppercase px-4 py-3 rounded" href="#commlink" onclick="closeMobileMenu()">CommLink</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 relative z-10">
+        <div class="absolute inset-0 z-0 opacity-10 bg-[size:40px_40px] bg-grid-pattern pointer-events-none"></div>
+
+        <!-- HERO -->
+        <section id="system" class="relative z-10 mb-20 pt-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div class="lg:col-span-7 flex flex-col gap-6">
+                    <div class="reveal inline-flex items-center gap-2 px-3 py-1 rounded bg-primary/10 border border-primary/20 w-fit">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                        </span>
+                        <span class="text-primary text-xs font-mono uppercase tracking-widest">System Status: Online</span>
+                    </div>
+                    <h1 class="reveal reveal-delay-1 text-5xl sm:text-6xl md:text-7xl font-black leading-[0.9] tracking-tighter text-white glitch-text">
+                        INDIE<br/><span class="text-primary text-glow">EXPERIMENTALIST.</span>
+                    </h1>
+                    <div class="hidden sm:flex gap-2">
+    <!-- YouTube -->
+    <a href="https://youtube.com/@lakhcode" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" 
+       data-tooltip="YouTube">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .5 6.186C0 8.07 0 12 0 12s0 3.93.5 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/lakhcode" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" 
+       data-tooltip="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4 2.21 0 4 1.791 4 4 0 2.21-1.79 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.44-.645 1.44-1.44-.644-1.44-1.44-1.44z"/>
+        </svg>
+    </a>
+
+    <!-- TikTok -->
+   <!-- <a href="https://tiktok.com/@lakhcode" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" 
+   data-tooltip="TikTok">
+    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="currentColor" viewBox="0 0 448 512">
+        <path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25v178.72A162.55 162.55 0 1 1 185 188.31v89.89a74.62 74.62 0 1 0 52.23 71.18V0h88a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/>
+    </svg>
+</a> -->
+
+    <!-- X -->
+    <a href="https://x.com/lakhcode" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" 
+       data-tooltip="X">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H1.15l8.6-9.83L.75 1.153h7.558l5.2 6.87 6.393-6.87zM17.61 20.644h2.039L8.27 3.356H5.988l11.622 17.288z"/>
+        </svg>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:lakhtech20@gmail.com" 
+       class="tooltip flex items-center justify-center size-9 rounded bg-panel-dark border border-border-dark text-slate-400 hover:text-primary hover:border-primary transition-all" 
+       data-tooltip="Email">
+        <span class="material-symbols-outlined text-[20px]">mail</span>
+    </a>
+</div>
+                    <div class="reveal reveal-delay-2 bg-panel-dark border border-border-dark p-4 rounded-lg font-mono text-sm text-slate-300 max-w-2xl relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+                        <div id="terminal-text" class="leading-relaxed pl-2"></div>
+                    </div>
+                    
+                    <div class="reveal reveal-delay-3 flex flex-wrap gap-4 mt-2">
+                        <a href="#commlink" class="h-12 px-6 bg-primary text-background-dark text-sm font-bold tracking-widest uppercase hover:bg-white transition-colors rounded flex items-center gap-2 group hover-lift">
+                            <span class="material-symbols-outlined group-hover:animate-bounce">terminal</span>Initiate_Contact
+                        </a>
+                        <a href="#projects" class="h-12 px-6 bg-transparent border border-border-dark text-slate-300 text-sm font-bold tracking-widest uppercase hover:border-primary hover:text-primary transition-colors rounded flex items-center gap-2 hover-lift">
+                            View_Projects<span class="material-symbols-outlined text-sm">arrow_downward</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 relative reveal reveal-delay-4">
+                    <div class="relative w-full aspect-square max-w-md mx-auto">
+                        <div class="absolute inset-0 border-2 border-primary/30 rounded-lg transform translate-x-4 translate-y-4 animate-pulse"></div>
+                        <div class="absolute inset-0 border-2 border-slate-700/50 rounded-lg transform -translate-x-4 -translate-y-4"></div>
+                        <div class="absolute inset-0 bg-panel-dark rounded-lg overflow-hidden border border-border-dark shadow-2xl">
+                            <div class="absolute top-0 left-0 right-0 h-8 bg-background-dark border-b border-border-dark flex items-center px-3 gap-2 z-10">
+                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                                <span class="ml-2 text-[10px] font-mono text-slate-600">~/lakhcode/profile.img</span>
+                            </div>
+                            <div class="w-full h-full pt-8 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCy_40dzixYq-bKz_NLPbLYx4Qz5XFh4b7nNfrbs1bVMQpHe0jrDwfUS8Tqa_pa2ZRTYwlUsTF6hF1GhpO4Zy68rBUpYv3OIfZpQHeOXKg3gHdHu-YuQ5JwMnHv5bhBgG0CQPXZ1wThjASTM071u4QlMyZaSSTfb-4NS_Onq2dngq_fteABWnND3ItkpcKjU5jV5j7SQ9DBs01QWw2hF4af7GiiuVBjNidQ30Da4-jzpsohecWIDPIZYuYqvqRvgPx90kFrswTkVo');">
+                                <div class="w-full h-full bg-primary/10 mix-blend-overlay scanline"></div>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 -right-6 bg-background-dark border border-primary p-4 rounded-lg shadow-xl z-20 box-glow">
+                            <div class="text-xs text-slate-400 uppercase tracking-widest mb-1">Experience</div>
+                            <div class="text-2xl font-bold text-white flex items-center gap-2">05 <span class="text-primary">YEARS</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTIVE PROCESS -->
+        <section id="active-process" class="mb-20 relative z-10">
+            <div class="reveal flex items-end justify-between mb-6 border-b border-border-dark pb-2">
+                <h3 class="text-white text-lg font-bold tracking-widest uppercase flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">memory</span>Active_Process (Currently Building)
+                </h3>
+                <span class="text-xs font-mono text-primary animate-pulse flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>Running...
+                </span>
+            </div>
+            <!-- ACTIVE PROCESS CARD -->
+            <div class="reveal reveal-delay-1 bg-panel-dark rounded-xl border border-border-dark p-1 relative overflow-hidden group hover:border-primary/50 transition-colors duration-300 hover-lift">
+                <div class="absolute -right-12 top-8 rotate-45 z-20 bg-primary text-background-dark font-bold text-[10px] py-1 px-12 shadow-lg tracking-widest pointer-events-none border-y-2 border-background-dark border-dashed">WORK_IN_PROGRESS</div>
+                <div class="flex flex-col md:flex-row gap-6 p-6">
+                    <div class="w-full md:w-1/2 lg:w-2/5 aspect-video rounded-lg overflow-hidden relative border border-border-dark">
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOZsMuvOY1TZXWMEludUfpjJigOzRcov-pJKNUpX1NeGQg8CwkI0tUg1revwbbEsnvivFf7fTphAYQSEXemD7FtlOsRZ0dNtX2Hn72wafKI_oa9N4dX23od7b_2R5JtVNXT9OKHM6kncQEp0umEQrXQaGpz7tXRluORITC2dAZTovkMJUt1Xl5iigqvnH0FVZ8HSc9-dhS161NVV17oyFf0JVVT2CSx3XWAGgfcx8wQLV_n8RCpIrckJfSxwHL0jY7MEoz3oLOE1Q');"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent opacity-60"></div>
+                        <div class="absolute bottom-3 left-3 flex gap-2">
+                            <span class="px-2 py-1 bg-background-dark/80 backdrop-blur text-[10px] text-primary border border-primary/30 rounded uppercase font-bold">Beta v1.0.1</span>
+                            <span class="px-2 py-1 bg-background-dark/80 backdrop-blur text-[10px] text-white border border-border-dark rounded uppercase font-bold">FLUTTER</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-center">
+                        <div class="mb-4">
+                            <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">ThumbnailPlus.com</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed max-w-xl">A platform that increases your views by providing you high-end thumbnails. Users can generate, analyze, compare thumbnails to make them better.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Flutter</span>
+                            <span class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Firebase</span>
+                            <span class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">AI/ML</span>
+                            <span class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Cloud Functions</span>
+                        </div>
+                        <div class="mb-6 w-full max-w-md">
+                            <div class="flex justify-between text-xs font-mono text-slate-500 mb-1">
+                                <span>Compiling...</span><span id="progress-percent">0%</span>
+                            </div>
+                            <div class="h-2 w-full bg-background-dark rounded-full overflow-hidden border border-border-dark">
+                                <div id="progress-bar" class="h-full progress-bar-animated rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://thumbnailplus.com" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary hover:text-background-dark border border-primary/50 text-primary rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
+                                <span class="material-symbols-outlined text-sm">visibility</span>View_Live
+                            </a>
+                            <!-- <a href="#" class="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-white/5 border border-border-dark text-slate-300 rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
+                                <span class="material-symbols-outlined text-sm">code_blocks</span>Source
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </div>
+        </section>
+
+        <!-- ================================ -->
+        <!-- INSTALLED projects (PROJECTS)     -->
+        <!-- ================================ -->
+        <section id="projects" class="mb-20 relative z-10">
+            <div class="reveal flex items-end justify-between mb-6 border-b border-border-dark pb-2">
+                <h3 class="text-white text-lg font-bold tracking-widest uppercase flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">grid_view</span>
+                    Live_projects (9)
+                </h3>
+                <div class="flex items-center gap-3">
+                    <button id="gridViewBtn" class="text-primary" title="Grid view"><span class="material-symbols-outlined">view_module</span></button>
+                    <button id="listViewBtn" class="text-slate-500 hover:text-white transition-colors" title="List view"><span class="material-symbols-outlined">view_list</span></button>
+                    <span class="text-xs font-mono text-slate-600 hidden sm:block">Click to inspect</span>
+                </div>
+            </div>
+
+            <!-- Grid — always 3 columns on lg, 2 on sm, 1 on mobile -->
+            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- ── VISIBLE BY DEFAULT (6 cards) ── -->
+
+                <!-- 1: Voice Journal -->
+                <div class="module-card reveal reveal-delay-1" onclick="openModal('voice-journal')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">record_voice_over</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.0.2</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">Voice Journal - Mood Diary</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">A mood tracking daily voice journaling app with local storage and privacy at its core.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Flutter</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-500 flex-shrink-0"></span>Firebase</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div>
+
+                <!-- 2: Currently Doing -->
+                <div class="module-card reveal reveal-delay-2" onclick="openModal('currently-doing')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">dataset</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.0.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">Currently Doing</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Let others know what you're currently doing. Share your activity status in real-time.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></span>Flutter</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-500 flex-shrink-0"></span>Firebase</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div>
+
+                <!-- 3: PiP Mode -->
+                <div class="module-card reveal reveal-delay-3" onclick="openModal('pip-mode')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">picture_in_picture</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v2.0.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">PiP + Subtitles &amp; Controls</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">A Chrome extension that lets you enjoy subtitles in picture-in-picture mode for "FREE".</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>JavaScript</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></span>Chrome API</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div>
+
+                <!-- 4: Indie Toolkit -->
+                <!-- <div class="module-card reveal reveal-delay-1" onclick="openModal('indie-toolkit')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">construction</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v0.8.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">Indie Toolkit</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Essential dev utilities for indie makers. Analytics snippets, launch checklists, and more.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></span>React</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-600 flex-shrink-0"></span>Node.js</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+                <!-- 5: SnapNotes -->
+                <!-- <div class="module-card reveal reveal-delay-2" onclick="openModal('snapnotes')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">edit_note</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.2.1</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">SnapNotes</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Lightning-fast capture for fleeting ideas. Minimal UI, maximal speed, zero friction.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Flutter</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>Supabase</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+                <!-- 6: DevDash CLI -->
+                <!-- <div class="module-card reveal reveal-delay-3" onclick="openModal('devdash-cli')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">terminal</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.0.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">DevDash CLI</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Terminal dashboard for indie devs. All your project metrics in one gorgeous terminal UI.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0"></span>Go</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0"></span>BubbleTea</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+                <!-- ── HIDDEN EXTRA CARDS (3) — toggled via JS ── -->
+
+                <!-- 7: CodeLink -->
+                <!-- <div class="module-card extra-card" onclick="openModal('codelink')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">share</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.1.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">CodeLink</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Share beautiful code snippets as images or gists directly from your editor in one click.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0"></span>TypeScript</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400 flex-shrink-0"></span>VS Code</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+                <!-- 8: FlutterKit -->
+                <!-- <div class="module-card extra-card" onclick="openModal('flutterkit')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">flutter</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v0.5.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">FlutterKit UI</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">A curated set of Flutter widgets and design tokens for building indie apps faster.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Flutter</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0"></span>Dart</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+                <!-- 9: LaunchLog -->
+                <!-- <div class="module-card extra-card" onclick="openModal('launchlog')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">rocket_launch</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v2.1.0</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">LaunchLog</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">Public changelog tool for indie makers. Post updates, build in public, grow your audience.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-400 flex-shrink-0"></span>Next.js</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>Supabase</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div> -->
+
+            </div><!-- /projectsGrid -->
+
+            <!-- Show more/less button — compact -->
+            <div class="flex justify-center mt-5">
+                <button id="showMoreBtn" type="button" >
+                    <span class="material-symbols-outlined btn-icon">keyboard_arrow_down</span>
+                    <span id="showMoreLabel" class="text-sm font-bold">SHOW_ALL</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- TECH STACK -->
+        <section id="tech-stack" class="mb-20 relative z-10">
+            <div class="reveal flex items-end justify-between mb-6 border-b border-border-dark pb-2">
+                <h3 class="text-white text-lg font-bold tracking-widest uppercase flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">build</span>System_Components (Tech Stack)
+                </h3>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="reveal reveal-delay-1 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-blue-400 group-hover:text-primary transition-colors">flutter</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Flutter</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-blue-400 rounded-full" style="width:95%"></div></div>
+                </div>
+                <div class="reveal reveal-delay-1 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-orange-400 group-hover:text-primary transition-colors">local_fire_department</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Firebase</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-orange-400 rounded-full" style="width:90%"></div></div>
+                </div>
+                <div class="reveal reveal-delay-2 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-cyan-400 group-hover:text-primary transition-colors">code</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Dart</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-cyan-400 rounded-full" style="width:92%"></div></div>
+                </div>
+                <div class="reveal reveal-delay-2 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-yellow-400 group-hover:text-primary transition-colors">javascript</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">JavaScript</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-yellow-400 rounded-full" style="width:85%"></div></div>
+                </div>
+                <div class="reveal reveal-delay-3 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-green-400 group-hover:text-primary transition-colors">smart_toy</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">AI / ML</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-green-400 rounded-full" style="width:70%"></div></div>
+                </div>
+                <div class="reveal reveal-delay-3 bg-panel-dark border border-border-dark hover:border-primary/50 rounded-lg p-4 flex flex-col items-center gap-3 transition-all duration-300 group hover-lift cursor-default">
+                    <div class="w-12 h-12 flex items-center justify-center bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-purple-400 group-hover:text-primary transition-colors">cloud</span>
+                    </div>
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Cloud</span>
+                    <div class="w-full h-1 bg-background-dark rounded-full overflow-hidden"><div class="h-full bg-purple-400 rounded-full" style="width:80%"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SYSTEM LOGS -->
+        <!-- <section id="logs" class="mb-20 relative z-10">
+            <div class="reveal flex items-end justify-between mb-6 border-b border-border-dark pb-2">
+                <h3 class="text-white text-lg font-bold tracking-widest uppercase flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">history</span>System_Logs (Journey)
+                </h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="reveal reveal-delay-1 space-y-0">
+                    <div class="relative pl-8 pb-8 border-l-2 border-border-dark group">
+                        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background-dark group-hover:scale-125 transition-transform"></div>
+                        <div class="bg-panel-dark rounded-lg border border-border-dark p-4 group-hover:border-primary/30 transition-colors">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-mono text-primary">2024 - Present</span>
+                                <span class="text-[10px] text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">ACTIVE</span>
+                            </div>
+                            <h5 class="text-white font-bold mb-1">Indie Builder & Experimenter</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">Building ThumbnailPlus.com and other indie products. Focused on solving real problems with technology.</p>
+                        </div>
+                    </div>
+                    <div class="relative pl-8 pb-8 border-l-2 border-border-dark group">
+                        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-slate-600 border-4 border-background-dark group-hover:bg-primary group-hover:scale-125 transition-all"></div>
+                        <div class="bg-panel-dark rounded-lg border border-border-dark p-4 group-hover:border-primary/30 transition-colors">
+                            <div class="mb-2"><span class="text-xs font-mono text-slate-500">2021 - 2024</span></div>
+                            <h5 class="text-white font-bold mb-1">Flutter Developer</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">Built multiple production apps using Flutter and Firebase. Published Chrome extensions and mobile apps.</p>
+                        </div>
+                    </div>
+                    <div class="relative pl-8 pb-0 border-l-2 border-border-dark group">
+                        <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-slate-600 border-4 border-background-dark group-hover:bg-primary group-hover:scale-125 transition-all"></div>
+                        <div class="bg-panel-dark rounded-lg border border-border-dark p-4 group-hover:border-primary/30 transition-colors">
+                            <div class="mb-2"><span class="text-xs font-mono text-slate-500">2019 - 2021</span></div>
+                            <h5 class="text-white font-bold mb-1">Started Coding</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">Began learning programming and fell in love with building things. Explored web development, mobile apps, and everything in between.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-2 space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors text-center">
+                            <div class="text-3xl font-black text-white mb-1 counter" data-target="5">0</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Years Exp.</div>
+                        </div>
+                        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors text-center">
+                            <div class="text-3xl font-black text-primary mb-1 counter" data-target="10">0</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Projects</div>
+                        </div>
+                        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors text-center">
+                            <div class="text-3xl font-black text-white mb-1 counter" data-target="3">0</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Live Products</div>
+                        </div>
+                        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors text-center">
+                            <div class="text-3xl font-black text-primary mb-1">∞</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Curiosity</div>
+                        </div>
+                    </div>
+                    <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+                        <div class="pl-4">
+                            <div class="text-xs text-primary uppercase tracking-widest mb-3 font-mono">// philosophy.txt</div>
+                            <blockquote class="text-white font-medium text-lg leading-relaxed mb-3">"Build fast, ship often, iterate always."</blockquote>
+                            <p class="text-sm text-slate-400 leading-relaxed">I believe in solving real problems with technology. Every line of code should serve a purpose, every product should make someone's life a little better.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- COMMLINK -->
+        <section id="commlink" class="mb-20 relative z-10">
+                <div class="reveal flex items-end justify-between mb-6 border-b border-border-dark pb-2">
+                    <h3 class="text-white text-lg font-bold tracking-widest uppercase flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">chat</span>CommLink (Get In Touch)
+                    </h3>
+                </div>
+            <!-- <div class="reveal reveal-delay-2 grid grid-cols-1 md:grid-cols-2 gap-6"> -->
+                <!-- <div class="reveal reveal-delay-1">
+                    <div class="bg-panel-dark border border-border-dark rounded-xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-8 bg-background-dark border-b border-border-dark flex items-center px-3 gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                            <span class="ml-2 text-[10px] font-mono text-slate-600">~/lakhcode/send_message.sh</span>
+                        </div>
+                        <form id="contactForm" class="pt-10 space-y-4" onsubmit="handleFormSubmit(event)">
+                            <div>
+                                <label class="text-xs font-mono text-slate-500 uppercase tracking-widest mb-1 block">Sender_ID (Name)</label>
+                                <input type="text" name="name" required class="form-input w-full bg-background-dark border border-border-dark rounded px-4 py-3 text-sm text-white font-mono placeholder:text-slate-600 focus:outline-none transition-all" placeholder="Enter your name..."/>
+                            </div>
+                            <div>
+                                <label class="text-xs font-mono text-slate-500 uppercase tracking-widest mb-1 block">Comm_Channel (Email)</label>
+                                <input type="email" name="email" required class="form-input w-full bg-background-dark border border-border-dark rounded px-4 py-3 text-sm text-white font-mono placeholder:text-slate-600 focus:outline-none transition-all" placeholder="your@email.com"/>
+                            </div>
+                            <div>
+                                <label class="text-xs font-mono text-slate-500 uppercase tracking-widest mb-1 block">Message_Body</label>
+                                <textarea name="message" rows="4" required class="form-input w-full bg-background-dark border border-border-dark rounded px-4 py-3 text-sm text-white font-mono placeholder:text-slate-600 focus:outline-none transition-all resize-none" placeholder="Type your message..."></textarea>
+                            </div>
+                            <button type="submit" id="submitBtn" class="w-full h-12 bg-primary text-background-dark text-sm font-bold tracking-widest uppercase hover:bg-white transition-colors rounded flex items-center justify-center gap-2 group hover-lift">
+                                <span class="material-symbols-outlined group-hover:animate-bounce text-lg">send</span>
+                                <span id="submitText">Transmit_Message</span>
+                            </button>
+                        </form>
+                        <div id="formSuccess" class="hidden pt-10 text-center py-12">
+                            <span class="material-symbols-outlined text-6xl text-accent-green mb-4 block">check_circle</span>
+                            <h4 class="text-xl font-bold text-white mb-2">Transmission Successful!</h4>
+                            <p class="text-sm text-slate-400">Your message has been received. I'll respond shortly.</p>
+                            <button onclick="resetForm()" class="mt-6 px-4 py-2 border border-border-dark text-slate-300 rounded text-xs font-bold uppercase tracking-wider hover:border-primary hover:text-primary transition-all">Send_Another</button>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Contact cards – now responsive horizontal layout -->
+    <div class="reveal reveal-delay-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Email -->
+        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+            <div class="flex items-center gap-4">
+                <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-primary">mail</span>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">Email</div>
+                    <a href="mailto:lakhtech20@gmail.com" class="text-white hover:text-primary transition-colors font-medium">lakhtech20@gmail.com</a>
+                </div>
+            </div>
+        </div>
+
+       <!-- YouTube -->
+<div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+    <div class="flex items-center gap-4">
+        <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+        </div>
+        <div>
+            <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">YouTube</div>
+            <a href="https://youtube.com/@lakhcode" target="_blank" rel="noopener noreferrer" class="text-white hover:text-primary transition-colors font-medium">youtube.com/@lakhcode</a>
+        </div>
+    </div>
+</div>
+
+<!-- Instagram -->
+<div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+    <div class="flex items-center gap-4">
+        <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-2.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+            </svg>
+        </div>
+        <div>
+            <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">Instagram</div>
+            <a href="https://instagram.com/lakhcodes" target="_blank" rel="noopener noreferrer" class="text-white hover:text-primary transition-colors font-medium">instagram.com/lakhcodes</a>
+        </div>
+    </div>
+</div>
+
+<!-- TikTok -->
+<!-- <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+    <div class="flex items-center gap-4">
+        <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>
+            </svg>
+        </div>
+        <div>
+            <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">TikTok</div>
+            <a href="https://tiktok.com/@lakhcode" target="_blank" rel="noopener noreferrer" class="text-white hover:text-primary transition-colors font-medium">tiktok.com/lakhcode</a>
+        </div>
+    </div>
+</div> -->
+
+
+        <!-- X -->
+        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+            <div class="flex items-center gap-4">
+                <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-primary">alternate_email</span>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">X</div>
+                    <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-primary transition-colors font-medium">@lakhcode</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="bg-panel-dark border border-border-dark rounded-lg p-5 hover:border-primary/30 transition-colors group">
+            <div class="flex items-center gap-4">
+                <div class="p-3 bg-background-dark rounded-lg border border-border-dark group-hover:border-primary/30 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-primary">location_on</span>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 font-mono uppercase tracking-widest mb-1">Location</div>
+                    <span class="text-white font-medium font-mono">127.0.0.1 <span class="text-slate-500">(Everywhere)</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available for Projects – full width on bigger screens -->
+        <div class="bg-accent-green/5 border border-accent-green/20 rounded-lg p-5 md:col-span-2">
+            <div class="flex items-center gap-3">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-accent-green"></span>
+                </span>
+                <div>
+                    <div class="text-white font-bold text-sm">Available for Projects</div>
+                    <div class="text-xs text-slate-400">Open to freelance & collaboration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <!-- </div> -->
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-border-dark pt-8 pb-4 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h5 class="text-primary text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">terminal</span>System Log
+                    </h5>
+                    <div id="systemLog" class="bg-black/30 p-4 rounded-lg font-mono text-xs text-slate-500 h-36 overflow-y-auto border border-border-dark/50"></div>
+                </div>
+                <div>
+                    <h5 class="text-white text-sm font-bold uppercase tracking-widest mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#system"><span class="material-symbols-outlined text-xs">arrow_right</span>Home</a></li>
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#projects"><span class="material-symbols-outlined text-xs">arrow_right</span>Projects</a></li>
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="#commlink"><span class="material-symbols-outlined text-xs">arrow_right</span>Contact</a></li>
+                        <li><a class="hover:text-primary transition-colors flex items-center gap-2" href="mailto:lakhtech20@gmail.com"><span class="material-symbols-outlined text-xs">arrow_right</span>lakhtech20@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-slate-600 font-mono pt-4 border-t border-border-dark/50 gap-2">
+                <p>© <span id="year">2025</span> LakhCode v1.0. All systems operational.</p>
+                <p>Built with <span class="text-primary">HTML</span>, <span class="text-primary">CSS</span>, <span class="text-primary">JS</span> &amp; Passion.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="fixed bottom-6 right-6 z-50 size-12 rounded-lg bg-primary text-background-dark flex items-center justify-center shadow-lg hover:bg-white transition-all hover-lift">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <!-- ================================ -->
+    <!-- MODULE MODAL                     -->
+    <!-- ================================ -->
+    <div id="moduleModal" role="dialog" aria-modal="true">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- JAVASCRIPT                        -->
+    <!-- ================================ -->
+    <script>
+    // ──────────────────────────────────────
+    // MODULE DATA
+    // ──────────────────────────────────────
+    const moduleData = {
+        'voice-journal': {
+            slug: 'voice-journal-mood-diary', icon: 'record_voice_over',
+            title: 'Voice Journal - Mood Diary', version: 'v1.0.2', status: 'LIVE',
+            statusGreen: true,
+            subtitle: 'A mood tracking daily voice journaling app',
+            about: 'Voice Journal lets you capture thoughts, feelings, and moods through voice recordings. All data stays on-device for total privacy, featuring insights of user\'s mood history.',
+            features: ['Make notes by recording voice','Record & track your mood','Private local storage — no cloud sync','Look back on your journals in Calendar view','Share your journals to others','Upload Media to your entries'],
+            stack: [{ name:'Flutter', color:'#3b82f6' },{ name:'Firebase', color:'#f97316' },{ name:'ML Kit', color:'#22c55e' }],
+            stars: '1,200', downloads: '8,400',
+            liveUrl: 'https://play.google.com/store/apps/details?id=com.fantrow.voicejournal'
+        },
+        'currently-doing': {
+            slug: 'currently-doing', icon: 'dataset',
+            title: 'Currently Doing', version: 'v1.0.0', status: 'LIVE', statusGreen: true,
+            subtitle: 'Share what you are currently doing in real-time',
+            about: 'Currently Doing is a minimal social presence site. Create & share an activity — "building a startup", "watching game of thrones", "in the zone" — and share it as a link. Others can follow your activity without social media noise.',
+            features: ['Real-time activity broadcasting','Custom activity categories','Shareable public profile link','Activity history timeline','Follow system with notifications','Highlight current activity'],
+            stack: [{ name:'Flutter', color:'#eab308' },{ name:'Firebase', color:'#f97316' }],
+            stars: '340', downloads: '2,100',
+            liveUrl: 'https://currentlydoing.web.app/'
+        },
+        'pip-mode': {
+            slug: 'pip-subtitles-controls', icon: 'picture_in_picture',
+            title: 'PiP + Subtitles & Controls', version: 'v2.0.0', status: 'LIVE', statusGreen: true,
+            subtitle: 'Picture-in-picture subtitles for any streaming site — free',
+            about: 'A Chrome extension that injects subtitle support into the native PiP window on any video streaming platform. Watch with subtitles while multitasking. No subscriptions, no paywalls, zero permissions required.',
+            features: ['Auto-detects subtitles on 5+ major platforms','Playback controls in PiP window','Subtitle size & position controls','Works on YouTube, Netflix, Hotstar & more','Zero permissions required','Available for free'],
+            stack: [{ name:'JavaScript', color:'#22c55e' },{ name:'Chrome API', color:'#60a5fa' }],
+            stars: '4,800', downloads: '92,000',
+            liveUrl: 'https://chromewebstore.google.com/detail/pip-mode-with-subtitles-c/gceioljibeimgbhpgkcpdlkglbnjljpf?authuser=0&hl=en'
+        },
+        // 'indie-toolkit': {
+        //     slug: 'indie-toolkit', icon: 'construction',
+        //     title: 'Indie Toolkit', version: 'v0.8.0', status: 'BETA', statusGreen: false,
+        //     subtitle: 'Essential dev utilities for indie makers',
+        //     about: 'A web app with a curated set of utilities that every indie maker needs: launch checklists, OG image generator, analytics snippet builder, pricing page templates, and more. Built for speed.',
+        //     features: ['Interactive launch checklist','OG image generator for social sharing','Analytics snippet builder','Pricing page templates','Open graph preview tool','README template generator'],
+        //     stack: [{ name:'React', color:'#60a5fa' },{ name:'Node.js', color:'#4ade80' }],
+        //     stars: '780', downloads: '5,600',
+        //    liveUrl: ''
+        // },
+        // 'snapnotes': {
+        //     slug: 'snapnotes', icon: 'edit_note',
+        //     title: 'SnapNotes', version: 'v1.2.1', status: 'LIVE', statusGreen: true,
+        //     subtitle: 'Lightning-fast capture for fleeting ideas',
+        //     about: 'SnapNotes is built for speed. Open the app and you are already typing. Notes sync instantly to Supabase. Tags, search, and a minimal distraction-free editor make it the fastest way to capture thoughts.',
+        //     features: ['Opens directly to editor — no home screen','Instant Supabase cloud sync','Tag-based organization','Full-text search across all notes','Offline-first with conflict resolution','Markdown support with live preview'],
+        //     stack: [{ name:'Flutter', color:'#3b82f6' },{ name:'Supabase', color:'#34d399' }],
+        //     stars: '620', downloads: '11,300',
+        //    liveUrl: ''
+        // },
+        // 'devdash-cli': {
+        //     slug: 'cli-dashboard', icon: 'terminal',
+        //     title: 'DevDash CLI', version: 'v1.0.0', status: 'STABLE', statusGreen: true,
+        //     subtitle: 'Terminal dashboard for indie devs',
+        //     about: 'A beautiful terminal dashboard that shows all your indie project metrics in one place. GitHub stars, download counts, revenue, uptime — all rendered in gorgeous terminal UI.',
+        //     features: ['Real-time GitHub & npm stats','Revenue tracking from Stripe/Gumroad','Uptime monitoring with alerts','Customizable widget layout','Runs in any terminal emulator','Low resource footprint'],
+        //     stack: [{ name:'Go', color:'#60a5fa' },{ name:'BubbleTea', color:'#f472b6' }],
+        //     stars: '560', downloads: '14,000',
+        //    liveUrl: ''
+        // },
+        // 'codelink': {
+        //     slug: 'codelink', icon: 'share',
+        //     title: 'CodeLink', version: 'v1.1.0', status: 'LIVE', statusGreen: true,
+        //     subtitle: 'Beautiful code sharing directly from your editor',
+        //     about: 'CodeLink is a VS Code extension that lets you share beautiful code screenshots or GitHub gists in one click. Pick a theme, copy the image or link, and share anywhere.',
+        //     features: ['One-click code screenshot generation','GitHub Gist integration','12 built-in syntax themes','Copy image or shareable URL','Custom watermark & branding','Supports 40+ languages'],
+        //     stack: [{ name:'TypeScript', color:'#facc15' },{ name:'VS Code API', color:'#c084fc' }],
+        //     stars: '910', downloads: '31,000',
+        //    liveUrl: ''
+        // },
+        // 'flutterkit': {
+        //     slug: 'flutterkit-ui', icon: 'flutter',
+        //     title: 'FlutterKit UI', version: 'v0.5.0', status: 'BETA', statusGreen: false,
+        //     subtitle: 'A curated Flutter widget library for indie apps',
+        //     about: 'FlutterKit UI is a design-first Flutter package with beautifully crafted widgets and design tokens. Built for indie makers who want polished UIs without spending weeks on design.',
+        //     features: ['50+ production-ready widgets','Design token system (colors, spacing, type)','Dark/light theme with one-line setup','Animated components out of the box','Pub.dev package with full docs','Figma design file included'],
+        //     stack: [{ name:'Flutter', color:'#3b82f6' },{ name:'Dart', color:'#22d3ee' }],
+        //     stars: '290', downloads: '4,100',
+        //    liveUrl: ''
+        // },
+        // 'launchlog': {
+        //     slug: 'launchlog', icon: 'rocket_launch',
+        //     title: 'LaunchLog', version: 'v2.1.0', status: 'LIVE', statusGreen: true,
+        //     subtitle: 'Public changelog tool for indie makers',
+        //     about: 'LaunchLog helps you build in public with a beautiful changelog page. Post updates, version notes, and behind-the-scenes stories. Subscribers get email notifications on every update.',
+        //     features: ['Markdown-powered changelog editor','Email subscriber notifications','Embeddable changelog widget','Custom domain support','RSS & Atom feed generation','Analytics on update engagement'],
+        //     stack: [{ name:'Next.js', color:'#fb923c' },{ name:'Supabase', color:'#34d399' }],
+        //     stars: '1,450', downloads: '18,700',
+        //    liveUrl: ''
+        // }
+    };
+
+    // ──────────────────────────────────────
+    // MODAL
+    // ──────────────────────────────────────
+    function openModal(id) {
+        const d = moduleData[id];
+        if (!d) return;
+
+        const sColor = d.statusGreen ? '#22c55e' : '#eab308';
+        const sBg    = d.statusGreen ? 'rgba(34,197,94,0.12)' : 'rgba(234,179,8,0.12)';
+        const sBdr   = d.statusGreen ? 'rgba(34,197,94,0.35)' : 'rgba(234,179,8,0.35)';
+
+        const featHTML = d.features.map(f => `
+            <div class="feature-item">
+                <div class="feature-check">
+                    <svg viewBox="0 0 10 10"><polyline points="1,5.5 3.5,8 9,2"/></svg>
+                </div>
+                <span>${f}</span>
+            </div>`).join('');
+
+        const stackHTML = d.stack.map(s => `
+            <span style="display:inline-flex;align-items:center;gap:8px;padding:5px 13px;background:#221b10;border:1px solid #493922;border-radius:6px;font-size:12px;font-family:'JetBrains Mono',monospace;color:#e2e8f0;">
+                <span style="width:9px;height:9px;border-radius:50%;background:${s.color};flex-shrink:0;"></span>${s.name}
+            </span>`).join('');
+
+        document.getElementById('modalContent').innerHTML = `
+            <div class="modal-header-bar">
+                <div class="modal-dot" style="background:#ef4444;cursor:pointer;" onclick="closeModal()"></div>
+                <div class="modal-dot" style="background:#eab308;"></div>
+                <div class="modal-dot" style="background:#22c55e;"></div>
+                <span style="margin-left:12px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#4b5563;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">module://${d.slug}</span>
+                <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;padding:0;margin-left:8px;flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="font-size:20px;">close</span>
+                </button>
+            </div>
+            <div style="padding:24px 24px 28px;">
+                <!-- Title row -->
+                <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;">
+                    <div style="padding:13px;background:#221b10;border:1px solid #493922;border-radius:10px;color:#f2930d;flex-shrink:0;">
+                        <span class="material-symbols-outlined" style="font-size:30px;display:block;">${d.icon}</span>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px;">
+                            <h2 style="font-size:20px;font-weight:800;color:#fff;font-family:'Space Grotesk',sans-serif;margin:0;">${d.title}</h2>
+                            <span style="padding:2px 9px;background:#2c241b;border:1px solid #493922;border-radius:4px;font-size:10px;font-family:'JetBrains Mono',monospace;color:#94a3b8;">${d.version}</span>
+                            <span style="padding:2px 9px;background:${sBg};border:1px solid ${sBdr};border-radius:4px;font-size:10px;font-family:'JetBrains Mono',monospace;color:${sColor};font-weight:700;">${d.status}</span>
+                        </div>
+                        <p style="font-size:12px;font-family:'JetBrains Mono',monospace;color:#f2930d;margin:0;">${d.subtitle}</p>
+                    </div>
+                </div>
+                <!-- About -->
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+                        <span class="material-symbols-outlined" style="font-size:16px;color:#f2930d;">description</span>
+                        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#f2930d;font-family:'Space Grotesk',sans-serif;">About</span>
+                    </div>
+                    <p style="font-size:13px;color:#94a3b8;line-height:1.7;margin:0;">${d.about}</p>
+                </div>
+                <!-- Features -->
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+                        <span class="material-symbols-outlined" style="font-size:16px;color:#f2930d;">checklist</span>
+                        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#f2930d;font-family:'Space Grotesk',sans-serif;">Features</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">${featHTML}</div>
+                </div>
+                <!-- Stack -->
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+                        <span class="material-symbols-outlined" style="font-size:16px;color:#f2930d;">code</span>
+                        <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#f2930d;font-family:'Space Grotesk',sans-serif;">Tech Stack</span>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px;">${stackHTML}</div>
+                </div>
+                <!-- Stats -->
+               <!-- <div style="display:flex;gap:18px;margin-bottom:22px;align-items:center;">
+                    <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'JetBrains Mono',monospace;color:#94a3b8;">
+                        <span style="color:#eab308;">★</span>
+                        <span style="font-weight:700;color:#e2e8f0;">${d.stars}</span> stars
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-family:'JetBrains Mono',monospace;color:#94a3b8;">
+                        <span class="material-symbols-outlined" style="font-size:14px;color:#60a5fa;">download</span>
+                        <span style="font-weight:700;color:#e2e8f0;">${d.downloads}</span> downloads
+                    </div>
+                </div> -->
+                <!-- Buttons -->
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <a href="${d.liveUrl}" target="blank_" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;background:#f2930d;color:#221b10;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:background 0.2s ease;" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='#f2930d'">
+                        <span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span>VISIT_SITE
+                    </a>
+                    <!-- <a href="#" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;background:transparent;color:#e2e8f0;border:1px solid #493922;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(242,147,13,0.5)';this.style.color='#f2930d'" onmouseout="this.style.borderColor='#493922';this.style.color='#e2e8f0'">
+                        <span class="material-symbols-outlined" style="font-size:15px;">code_blocks</span>VIEW_SOURCE
+                    </a> -->
+                </div>
+            </div>`;
+
+        document.getElementById('moduleModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('modalContent').scrollTop = 0;
+    }
+
+    function closeModal() {
+        document.getElementById('moduleModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ──────────────────────────────────────
+    // SHOW MORE / LESS  ← fixed
+    // ──────────────────────────────────────
+    let showMoreOpen = false;
+
+    document.getElementById('showMoreBtn').addEventListener('click', function () {
+        showMoreOpen = !showMoreOpen;
+        const extras = document.querySelectorAll('.extra-card');
+        extras.forEach(el => {
+            if (showMoreOpen) {
+                el.classList.add('is-visible');   // display: flex  (from CSS)
+            } else {
+                el.classList.remove('is-visible'); // display: none  (from CSS)
+            }
+        });
+        this.classList.toggle('expanded', showMoreOpen);
+        document.getElementById('showMoreLabel').textContent = showMoreOpen ? 'SHOW_LESS' : 'SHOW_ALL';
+    });
+
+    // ──────────────────────────────────────
+    // GRID / LIST VIEW TOGGLE
+    // ──────────────────────────────────────
+    document.getElementById('gridViewBtn').addEventListener('click', function () {
+        const g = document.getElementById('projectsGrid');
+        g.classList.remove('grid-cols-1');
+        g.classList.add('sm:grid-cols-2', 'lg:grid-cols-3');
+        this.classList.add('text-primary');     this.classList.remove('text-slate-500');
+        document.getElementById('listViewBtn').classList.remove('text-primary');
+        document.getElementById('listViewBtn').classList.add('text-slate-500');
+    });
+
+    document.getElementById('listViewBtn').addEventListener('click', function () {
+        const g = document.getElementById('projectsGrid');
+        g.classList.add('grid-cols-1');
+        g.classList.remove('sm:grid-cols-2', 'lg:grid-cols-3');
+        this.classList.add('text-primary');     this.classList.remove('text-slate-500');
+        document.getElementById('gridViewBtn').classList.remove('text-primary');
+        document.getElementById('gridViewBtn').classList.add('text-slate-500');
+    });
+
+    // ──────────────────────────────────────
+    // PRELOADER
+    // ──────────────────────────────────────
+    window.addEventListener('load', () => {
+        setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 1800);
+    });
+
+    // ──────────────────────────────────────
+    // CLOCK
+    // ──────────────────────────────────────
+    function updateClock() {
+        const n = new Date();
+        const pad = v => String(v).padStart(2,'0');
+        const el = document.getElementById('clock-time');
+        if (el) el.textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // ──────────────────────────────────────
+    // YEAR
+    // ──────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ──────────────────────────────────────
+    // MOBILE MENU
+    // ──────────────────────────────────────
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon   = document.getElementById('menuIcon');
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open', menuOpen);
+        menuIcon.textContent = menuOpen ? 'close' : 'menu';
+    });
+    function closeMobileMenu() {
+        menuOpen = false; mobileMenu.classList.remove('open'); menuIcon.textContent = 'menu';
+    }
+
+    // ──────────────────────────────────────
+    // HEADER SCROLL SHADOW
+    // ──────────────────────────────────────
+    window.addEventListener('scroll', () => {
+        document.getElementById('header').classList.toggle('shadow-lg', window.pageYOffset > 100);
+    });
+
+    // ──────────────────────────────────────
+    // ACTIVE NAV
+    // ──────────────────────────────────────
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    function updateActiveNav() {
+        const sp = window.scrollY + 120;
+        sections.forEach(sec => {
+            if (sp >= sec.offsetTop && sp < sec.offsetTop + sec.offsetHeight) {
+                navLinks.forEach(l => {
+                    l.classList.toggle('active', l.getAttribute('href') === `#${sec.id}`);
+                    l.classList.toggle('text-primary', l.getAttribute('href') === `#${sec.id}`);
+                    l.classList.toggle('text-slate-400', l.getAttribute('href') !== `#${sec.id}`);
+                });
+            }
+        });
+    }
+    window.addEventListener('scroll', updateActiveNav); updateActiveNav();
+
+    // ──────────────────────────────────────
+    // BACK TO TOP
+    // ──────────────────────────────────────
+    const btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 500));
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ──────────────────────────────────────
+    // SCROLL REVEAL
+    // ──────────────────────────────────────
+    new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
+    .observe(...[document.querySelectorAll('.reveal')].flatMap(nl => [...nl]));
+
+    // Simpler reveal loop
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ──────────────────────────────────────
+    // COUNTERS
+    // ──────────────────────────────────────
+    const cntObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.counted) {
+                entry.target.dataset.counted = '1';
+                const target = parseInt(entry.target.dataset.target);
+                let current = 0;
+                const inc = target / 40;
+                const t = setInterval(() => {
+                    current += inc;
+                    if (current >= target) { current = target; clearInterval(t); }
+                    entry.target.textContent = Math.round(current) + '+';
+                }, 50);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(c => cntObs.observe(c));
+
+    // ──────────────────────────────────────
+    // PROGRESS BAR
+    // ──────────────────────────────────────
+    const pb = document.getElementById('progress-bar');
+    const pp = document.getElementById('progress-percent');
+    if (pb) {
+        new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    entry.target.dataset.animated = '1';
+                    let c = 0;
+                    const t = setInterval(() => {
+                        c++;
+                        if (c >= 82) { c = 82; clearInterval(t); }
+                        pb.style.width = c + '%';
+                        pp.textContent = c + '%';
+                    }, 25);
+                }
+            });
+        }, { threshold: 0.3 }).observe(pb);
+    }
+
+    // ──────────────────────────────────────
+    // TERMINAL TYPING
+    // ──────────────────────────────────────
+    const termLines = [
+        { html: '<span style="color:#f2930d">root@portfolio:~$</span> ./initiate_sequence.sh', delay: 0 },
+        { html: '<span style="color:#475569">&gt; Loading profile... Done.</span>', delay: 600 },
+        { html: '<span style="color:#475569">&gt; Currently Building: ThumbnailPlus.com v1.0.0</span>', delay: 1200 },
+        { html: '<span style="color:#475569">&gt; Stack: Flutter | Firebase | AI/ML</span>', delay: 1800 },
+        { html: 'I experiment and solve problems by building indie products.', delay: 2400 },
+        { html: '<span class="cursor-blink"></span>', delay: 3200 },
+    ];
+    const termEl = document.getElementById('terminal-text');
+    function typeTerminal() {
+        termLines.forEach(line => {
+            setTimeout(() => {
+                const p = document.createElement('p');
+                p.innerHTML = line.html;
+                p.style.cssText = 'opacity:0;transform:translateY(5px);transition:all 0.3s ease;';
+                termEl.appendChild(p);
+                requestAnimationFrame(() => { p.style.opacity = '1'; p.style.transform = 'translateY(0)'; });
+            }, line.delay);
+        });
+    }
+    setTimeout(typeTerminal, 2000);
+
+    // ──────────────────────────────────────
+    // SYSTEM LOG
+    // ──────────────────────────────────────
+    const logMsgs = [
+        '> Initializing UI components...',
+        '> Loading fonts... OK',
+        '> Establishing secure connection... 200 OK',
+        '> Loading project projects ... Done',
+        '<span style="color:#f2930d">> User session started.</span>',
+        '> All systems operational.',
+    ];
+    const sysLog = document.getElementById('systemLog');
+    logMsgs.forEach((msg, i) => {
+        setTimeout(() => {
+            const p = document.createElement('p');
+            p.innerHTML = msg; p.style.cssText = 'opacity:0;transition:opacity 0.3s ease;';
+            sysLog.appendChild(p);
+            requestAnimationFrame(() => { p.style.opacity = '1'; });
+            sysLog.scrollTop = sysLog.scrollHeight;
+        }, i * 200 + 2500);
+    });
+
+    // ──────────────────────────────────────
+    // CONTACT FORM
+    // ──────────────────────────────────────
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        document.getElementById('submitText').textContent = 'Transmitting...';
+        btn.disabled = true; btn.classList.add('opacity-75');
+        setTimeout(() => {
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('formSuccess').classList.remove('hidden');
+        }, 1500);
+    }
+    function resetForm() {
+        const f = document.getElementById('contactForm');
+        f.reset(); f.style.display = 'block';
+        document.getElementById('formSuccess').classList.add('hidden');
+        const btn = document.getElementById('submitBtn');
+        document.getElementById('submitText').textContent = 'Transmit_Message';
+        btn.disabled = false; btn.classList.remove('opacity-75');
+    }
+
+    // ──────────────────────────────────────
+    // CURSOR TRAIL (desktop)
+    // ──────────────────────────────────────
+    if (window.innerWidth > 768) {
+        document.addEventListener('mousemove', e => {
+            if (Math.random() > 0.92) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;opacity:0.6;position:fixed;z-index:9998;`;
+                document.body.appendChild(p);
+                requestAnimationFrame(() => {
+                    p.style.transition = 'all 1s ease-out';
+                    p.style.opacity = '0';
+                    p.style.transform = `translate(${(Math.random()-.5)*40}px,${-20-Math.random()*30}px)`;
+                });
+                setTimeout(() => p.remove(), 1200);
+            }
+        });
+    }
+
+    // Console
+    console.log('%c⚡ LakhCode v1.0 ⚡', 'color:#f2930d;font-size:24px;font-weight:bold;font-family:monospace;');
+    console.log('%cLooking at my code? Nice. lakhtech20@gmail.com', 'color:#22c55e;font-size:12px;font-family:monospace;');
+    </script>
+</body>
+</html>
