@@ -849,14 +849,14 @@
                     <div
                         class="w-full md:w-1/2 lg:w-2/5 aspect-video rounded-lg overflow-hidden relative border border-border-dark">
                         <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOZsMuvOY1TZXWMEludUfpjJigOzRcov-pJKNUpX1NeGQg8CwkI0tUg1revwbbEsnvivFf7fTphAYQSEXemD7FtlOsRZ0dNtX2Hn72wafKI_oa9N4dX23od7b_2R5JtVNXT9OKHM6kncQEp0umEQrXQaGpz7tXRluORITC2dAZTovkMJUt1Xl5iigqvnH0FVZ8HSc9-dhS161NVV17oyFf0JVVT2CSx3XWAGgfcx8wQLV_n8RCpIrckJfSxwHL0jY7MEoz3oLOE1Q');">
+                            style="background-image: url('assets/howilook-feature.jpg');">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-background-dark to-transparent opacity-60">
                         </div>
                         <div class="absolute bottom-3 left-3 flex gap-2">
                             <span
                                 class="px-2 py-1 bg-background-dark/80 backdrop-blur text-[10px] text-primary border border-primary/30 rounded uppercase font-bold">Beta
-                                v1.0.1</span>
+                                v1.0.0</span>
                             <span
                                 class="px-2 py-1 bg-background-dark/80 backdrop-blur text-[10px] text-white border border-border-dark rounded uppercase font-bold">FLUTTER</span>
                         </div>
@@ -864,21 +864,18 @@
                     <div class="flex-1 flex flex-col justify-center">
                         <div class="mb-4">
                             <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
-                                ThumbnailPlus.com</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed max-w-xl">A platform that increases your
-                                views by providing you high-end thumbnails. Users can generate, analyze, compare
-                                thumbnails to make them better.</p>
+                                Howilook: AI Face Rating</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed max-w-xl">AI-powered face and outfit feedback app for Android. Explore cosmetic style scores, personalized grooming advice, and clothing coordination suggestions.</p>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span
                                 class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Flutter</span>
                             <span
-                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Firebase</span>
+                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Supabase</span>
                             <span
-                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">AI/ML</span>
+                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Vertex AI</span>
                             <span
-                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Cloud
-                                Functions</span>
+                                class="tech-tag px-2 py-1 text-[10px] font-mono text-slate-400 bg-background-dark border border-border-dark rounded uppercase">Riverpod</span>
                         </div>
                         <div class="mb-6 w-full max-w-md">
                             <div class="flex justify-between text-xs font-mono text-slate-500 mb-1">
@@ -891,18 +888,17 @@
                             </div>
                         </div>
                         <div class="flex gap-3">
-                            <a href="https://thumbnailplus.com" target="_blank"
+                            <a href="https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI" target="_blank"
                                 class="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary hover:text-background-dark border border-primary/50 text-primary rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
-                                <span class="material-symbols-outlined text-sm">visibility</span>View_Live
+                                <span class="material-symbols-outlined text-sm">shop</span>Play_Store
                             </a>
-                            <!-- <a href="#" class="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-white/5 border border-border-dark text-slate-300 rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
-                                <span class="material-symbols-outlined text-sm">code_blocks</span>Source
-                            </a> -->
+                            <button onclick="openModal('howilook')"
+                                class="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-white/5 border border-border-dark text-slate-300 rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
+                                <span class="material-symbols-outlined text-sm">info</span>Details
+                            </button>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </section>
 
@@ -929,8 +925,35 @@
 
                 <!-- ── VISIBLE BY DEFAULT (6 cards) ── -->
 
+                <!-- 1: ThumbnailPlus -->
+                <div class="module-card reveal reveal-delay-1" onclick="openModal('thumbnailplus')">
+                    <div class="flex items-start justify-between mb-4">
+                        <div
+                            class="card-icon p-3 bg-background-dark rounded-lg border border-border-dark text-slate-300">
+                            <span class="material-symbols-outlined text-[28px]">photo_library</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-accent-green flex-shrink-0"></span>
+                            <span
+                                class="text-[10px] font-mono text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">v1.0.1</span>
+                        </div>
+                    </div>
+                    <h4 class="card-title text-base font-bold text-white mb-1.5 leading-snug">ThumbnailPlus.com</h4>
+                    <p class="text-sm text-slate-400 leading-relaxed flex-1 mb-4">A platform that increases your views by providing you high-end thumbnails. Generate, analyze, and compare thumbnails to make them better.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border-dark/60">
+                        <div class="flex gap-3 text-xs text-slate-500">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Flutter</span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-orange-500 flex-shrink-0"></span>Firebase</span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2 h-2 rounded-full bg-purple-500 flex-shrink-0"></span>AI/ML</span>
+                        </div>
+                        <span class="material-symbols-outlined text-primary card-arrow text-[20px]">arrow_forward</span>
+                    </div>
+                </div>
 
-                <!-- 1: TextGlint -->
+                <!-- 2: TextGlint -->
                 <div class="module-card reveal reveal-delay-1" onclick="openModal('textglint')">
                     <div class="flex items-start justify-between mb-4">
                         <div
@@ -958,7 +981,7 @@
                     </div>
                 </div>
 
-                <!-- 2: Slang Book -->
+                <!-- 3: Slang Book -->
                 <div class="module-card reveal reveal-delay-2" onclick="openModal('slang-book')">
                     <div class="flex items-start justify-between mb-4">
                         <div
@@ -986,7 +1009,7 @@
                     </div>
                 </div>
 
-                <!-- 3: Voice Journal -->
+                <!-- 4: Voice Journal -->
                 <div class="module-card reveal reveal-delay-3" onclick="openModal('voice-journal')">
                     <div class="flex items-start justify-between mb-4">
                         <div
@@ -1014,7 +1037,7 @@
                     </div>
                 </div>
 
-                <!-- 4: Currently Doing -->
+                <!-- 5: Currently Doing -->
                 <div class="module-card reveal reveal-delay-4" onclick="openModal('currently-doing')">
                     <div class="flex items-start justify-between mb-4">
                         <div
@@ -1041,7 +1064,7 @@
                     </div>
                 </div>
 
-                <!-- 5: PiP Mode -->
+                <!-- 6: PiP Mode -->
                 <div class="module-card reveal reveal-delay-5" onclick="openModal('pip-mode')">
                     <div class="flex items-start justify-between mb-4">
                         <div
@@ -1320,7 +1343,7 @@
                                 <span class="text-[10px] text-slate-500 bg-background-dark px-2 py-0.5 rounded border border-border-dark">ACTIVE</span>
                             </div>
                             <h5 class="text-white font-bold mb-1">Indie Builder & Experimenter</h5>
-                            <p class="text-sm text-slate-400 leading-relaxed">Building ThumbnailPlus.com and other indie products. Focused on solving real problems with technology.</p>
+                            <p class="text-sm text-slate-400 leading-relaxed">Building Howilook, ThumbnailPlus.com, and other indie products. Focused on solving real problems with technology.</p>
                         </div>
                     </div>
                     <div class="relative pl-8 pb-8 border-l-2 border-border-dark group">
@@ -1598,6 +1621,26 @@
         // MODULE DATA
         // ──────────────────────────────────────
         const moduleData = {
+            'thumbnailplus': {
+                slug: 'thumbnailplus-ai-platform', icon: 'photo_library',
+                title: 'ThumbnailPlus.com', version: 'v1.0.1', status: 'LIVE', statusGreen: true,
+                subtitle: 'AI platform to generate, analyze, and compare high-converting thumbnails',
+                about: 'ThumbnailPlus is an AI-powered creator platform that increases video click-through rates and views. Creators can generate high-end thumbnail concepts, analyze visual hierarchy and emotional impact, and A/B compare multiple designs to optimize performance before publishing.',
+                features: ['AI-powered thumbnail generation & ideation', 'CTR score & visual hierarchy analysis', 'Side-by-side variant A/B comparison', 'Subject segmentation & auto cutout tools', 'Custom typography and layout presets', 'Instant export optimized for YouTube & social'],
+                stack: [{ name: 'Flutter', color: '#3b82f6' }, { name: 'Firebase', color: '#f97316' }, { name: 'AI/ML', color: '#a855f7' }, { name: 'Cloud Functions', color: '#10b981' }],
+                stars: '450+', downloads: '1,200+',
+                liveUrl: 'https://thumbnailplus.com'
+            },
+            'howilook': {
+                slug: 'howilook-ai-face-rating', icon: 'face',
+                title: 'Howilook: AI Face Rating', version: 'v1.0.0', status: 'BETA', statusGreen: false,
+                subtitle: 'AI face & outfit feedback. Explore cosmetic style scores and grooming tips',
+                about: 'Explore your look with Howilook, an AI-powered face and outfit feedback app for Android. Take a photo or choose one with the system picker to receive cosmetic style feedback on grooming and presentation, plus outfit advice focused on clothing fit, color coordination, and styling suggestions.',
+                features: ['Cosmetic face presentation & grooming analysis', 'Outfit coordination & fit analysis', 'Tailored style suggestions by occasion', 'Account scan history & progress timeline', 'Brutal Mode for unfiltered feedback', 'Shareable score & result cards'],
+                stack: [{ name: 'Flutter', color: '#3b82f6' }, { name: 'Supabase', color: '#34d399' }, { name: 'Vertex AI', color: '#a855f7' }, { name: 'Riverpod', color: '#f59e0b' }],
+                stars: 'Beta', downloads: 'Early Access',
+                liveUrl: 'https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI'
+            },
             'slang-book': {
                 slug: 'slang-book-modern-dictionary', icon: 'menu_book',
                 title: 'Slang Book: Modern Dictionary', version: 'v1.0.0', status: 'LIVE', statusGreen: true,
@@ -1994,8 +2037,8 @@
         const termLines = [
             { html: '<span style="color:#f2930d">root@portfolio:~$</span> ./initiate_sequence.sh', delay: 0 },
             { html: '<span style="color:#475569">&gt; Loading profile... Done.</span>', delay: 600 },
-            { html: '<span style="color:#475569">&gt; Currently Building: ThumbnailPlus.com v1.0.0</span>', delay: 1200 },
-            { html: '<span style="color:#475569">&gt; Stack: Flutter | Firebase | AI/ML</span>', delay: 1800 },
+            { html: '<span style="color:#475569">&gt; Currently Building: Howilook v1.0.0</span>', delay: 1200 },
+            { html: '<span style="color:#475569">&gt; Stack: Flutter | Supabase | Vertex AI</span>', delay: 1800 },
             { html: 'I experiment and solve problems by building indie products.', delay: 2400 },
             { html: '<span class="cursor-blink"></span>', delay: 3200 },
         ];
