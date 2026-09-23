@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion Instructions - Howilook</title>
+    <style>
+        :root {
+            --bg-color: #0c0d0e;
+            --card-bg: #16181a;
+            --text-color: #d1d5db;
+            --heading-color: #f9fafb;
+            --primary: #c9a84c;
+            --border-color: #27272a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 32px 16px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 32px;
+            margin-top: 0;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 20px;
+            margin-top: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        p,
+        li {
+            font-size: 15px;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        .step-box {
+            background: #1f2226;
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <a href="./" style="color:var(--primary); text-decoration:none; font-weight:600; font-size:14px; display:inline-flex; align-items:center; gap:6px;">&larr; Back to Howilook</a>
+        </div>
+        <h1>User Data Deletion Instructions</h1>
+        <p>Android release draft &mdash; September 18, 2026. Publication, retention terms and owner legal review are
+            pending. These instructions describe deletion requests, not a guarantee of instant erasure or a
+            certification of regulatory compliance.</p>
+
+        <h2>Method 1: Request In-App Account & Data Deletion</h2>
+        <div class="step-box">
+            <ol>
+                <li>Open the <strong>Howilook</strong> application on your mobile device.</li>
+                <li>Navigate to <strong>Settings</strong> (gear icon in the bottom navigation or profile).</li>
+                <li>Scroll to the bottom of the Settings screen.</li>
+                <li>Tap <strong>Delete Account</strong> (marked in red).</li>
+                <li>Confirm the prompt by tapping <strong>DELETE ACCOUNT PERMANENTLY</strong>.</li>
+            </ol>
+        </div>
+        <p>Confirmation submits a deletion request. A pending response, hidden history item or local sign-out does not
+            mean cloud cleanup has completed. The deletion workflow must reconcile in-flight work and remove
+            application-held profile, outfit/face scan and image/avatar data before final account removal.</p>
+        <p>Cleanup can fail or remain pending and need retry. Reopen the app to check the displayed status or contact
+            support if it cannot complete. Automated cleanup and its scheduler must be deployed and verified before
+            release; local implementation alone does not establish that service.</p>
+        <p>Individual scans can also be deleted from history; hiding the scan while cleanup is pending does not confirm
+            that its stored photo has been erased. Original gallery photos and copies you shared to other apps are not
+            deleted by Howilook.</p>
+        <p>Application deletion does not erase payment providers' own records or establish backup/provider retention
+            periods. Any legally required retained records, retention schedules and provider erasure process must be
+            approved and disclosed before publication. No immediate purge of all payment or referral evidence is
+            promised.</p>
+
+        <h2>Method 2: Email Request</h2>
+        <p>If you have already uninstalled the application or cannot access your device, you can request manual data
+            deletion by sending an email from your registered email address to:</p>
+        <p><strong>Email:</strong> <a href="mailto:lakhtech20@gmail.com">lakhtech20@gmail.com</a><br>
+            <strong>Subject:</strong> Account & Data Deletion Request
+        </p>
+        <p>Identity verification may be needed to prevent deletion by someone else. Do not email passwords, access
+            tokens or payment credentials. Mailbox monitoring, identity-verification procedure, response deadlines and
+            applicable retention exceptions must be approved before publication; this draft does not promise a fixed
+            completion deadline.</p>
+    </div>
+</body>
+
+</html>

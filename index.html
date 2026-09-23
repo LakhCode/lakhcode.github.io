@@ -887,10 +887,14 @@
                                     style="width: 0%"></div>
                             </div>
                         </div>
-                        <div class="flex gap-3">
+                        <div class="flex flex-wrap gap-3">
                             <a href="https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI" target="_blank"
                                 class="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary hover:text-background-dark border border-primary/50 text-primary rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
                                 <span class="material-symbols-outlined text-sm">shop</span>Play_Store
+                            </a>
+                            <a href="/howilook"
+                                class="flex items-center gap-2 px-4 py-2 bg-amber-400/10 hover:bg-amber-400 hover:text-background-dark border border-amber-400/40 text-amber-300 rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
+                                <span class="material-symbols-outlined text-sm">public</span>Landing_Page
                             </a>
                             <button onclick="openModal('howilook')"
                                 class="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-white/5 border border-border-dark text-slate-300 rounded text-xs font-bold uppercase tracking-wider transition-all hover-lift">
@@ -1639,7 +1643,8 @@
                 features: ['Cosmetic face presentation & grooming analysis', 'Outfit coordination & fit analysis', 'Tailored style suggestions by occasion', 'Account scan history & progress timeline', 'Brutal Mode for unfiltered feedback', 'Shareable score & result cards'],
                 stack: [{ name: 'Flutter', color: '#3b82f6' }, { name: 'Supabase', color: '#34d399' }, { name: 'Vertex AI', color: '#a855f7' }, { name: 'Riverpod', color: '#f59e0b' }],
                 stars: 'Beta', downloads: 'Early Access',
-                liveUrl: 'https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI'
+                liveUrl: 'https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI',
+                landingUrl: '/howilook'
             },
             'slang-book': {
                 slug: 'slang-book-modern-dictionary', icon: 'menu_book',
@@ -1844,9 +1849,10 @@
                     <a href="${d.liveUrl}" target="blank_" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;background:#f2930d;color:#221b10;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:background 0.2s ease;" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='#f2930d'">
                         <span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span>VISIT_SITE
                     </a>
-                    <!-- <a href="#" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;background:transparent;color:#e2e8f0;border:1px solid #493922;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(242,147,13,0.5)';this.style.color='#f2930d'" onmouseout="this.style.borderColor='#493922';this.style.color='#e2e8f0'">
-                        <span class="material-symbols-outlined" style="font-size:15px;">code_blocks</span>VIEW_SOURCE
-                    </a> -->
+                    ${d.landingUrl ? `
+                    <a href="${d.landingUrl}" style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;background:rgba(230,195,100,0.15);color:#ffdf78;border:1px solid rgba(230,195,100,0.4);border-radius:6px;font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:all 0.2s ease;" onmouseover="this.style.background='rgba(230,195,100,0.3)'" onmouseout="this.style.background='rgba(230,195,100,0.15)'">
+                        <span class="material-symbols-outlined" style="font-size:15px;">public</span>LANDING_PAGE
+                    </a>` : ''}
                 </div>
             </div>`;
 
