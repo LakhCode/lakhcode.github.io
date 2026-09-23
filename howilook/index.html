@@ -418,10 +418,15 @@
             background: rgba(230, 195, 100, 0.06);
             border: 1px solid var(--gold-border);
             border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 28px;
-            max-width: 520px;
+            padding: 22px 24px;
+            margin: 0 auto 28px;
+            max-width: 480px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .hero-trust-row {
@@ -617,7 +622,9 @@
                 justify-content: center;
             }
             .hero-download-box {
-                text-align: left;
+                margin: 0 auto 28px;
+                text-align: center;
+                align-items: center;
             }
             .steps-grid {
                 grid-template-columns: 1fr;
@@ -709,10 +716,7 @@
             <a href="/howilook" style="display:flex; align-items:center; gap:10px; text-decoration:none; flex-shrink:0;">
                 <img src="assets/app_icon.png" alt="Howilook Icon"
                     style="width:38px; height:38px; border-radius:10px; border:1px solid var(--gold-border); box-shadow:0 0 12px var(--gold-glow); flex-shrink:0;">
-                <div>
-                    <span class="font-serif" style="font-size:20px; font-weight:700; color:#fff; letter-spacing:-0.5px;">Howilook</span>
-                    <span class="badge-pill" style="padding:2px 7px; font-size:8.5px; margin-left:4px; vertical-align:middle;">Beta</span>
-                </div>
+                <span class="font-serif" style="font-size:20px; font-weight:700; color:#fff; letter-spacing:-0.5px;">Howilook</span>
             </a>
 
             <div style="display:flex; align-items:center; gap:16px;">
@@ -801,22 +805,26 @@
 
                 <!-- Obvious Play Store Download Box -->
                 <div class="hero-download-box">
-                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-                        <div>
-                            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-                                <span style="color:#ffdf78; font-size:14px;">★★★★★</span>
-                                <span style="font-size:12px; font-weight:700; color:var(--gold-primary);">3 FREE STARTER SCANS</span>
-                            </div>
-                            <div style="font-size:12px; color:var(--text-muted);">No credit card required • Instant results</div>
-                        </div>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:12px;">
+                        <span style="color:#ffdf78; font-size:15px; letter-spacing:1px;">★★★★★</span>
+                        <span style="font-size:12.5px; font-weight:700; color:var(--text-main);">Google Play Early Access</span>
+                    </div>
 
+                    <div style="display:flex; justify-content:center; width:100%; margin-bottom:12px;">
                         <a href="https://play.google.com/store/apps/details?id=com.fantrow.howilook&hl=en-US&ah=QlmzWm8ijynO5jUC_EQi2LpiBzI"
-                            target="_blank" class="btn-gold-primary" style="flex-shrink:0;">
+                            target="_blank" class="btn-gold-primary" style="width:100%; max-width:320px; justify-content:center;">
                             <svg style="width:20px; height:20px; fill:currentColor;" viewBox="0 0 24 24">
                                 <path d="M3.609 1.814L13.792 12 3.61 22.186a1.99 1.99 0 0 1-.22-.924V2.738c0-.34.08-.654.22-.924zm11.242 11.243l2.457 2.457-11.45 6.467 8.993-8.924zm0-2.114L5.858 2.02l11.45 6.466-2.457 2.457zm1.472 1.057l3.65 2.062c.983.555.983 1.457 0 2.012l-3.65 2.062-2.179-2.179 2.179-2.157z"/>
                             </svg>
                             <span>GET ON GOOGLE PLAY</span>
                         </a>
+                    </div>
+
+                    <div style="font-size:12.5px; font-weight:700; color:var(--gold-primary); margin-bottom:4px; text-align:center;">
+                        3 Free Starter Scans Included
+                    </div>
+                    <div style="font-size:11.5px; color:var(--text-muted); text-align:center;">
+                        No credit card required • Instant results • <span style="color:var(--text-secondary); opacity:0.85;">iOS coming soon</span>
                     </div>
                 </div>
 
@@ -1102,6 +1110,16 @@
                     </p>
                 </details>
 
+                <details style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:14px; padding:20px; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--gold-border)'" onmouseout="this.style.borderColor='var(--border-subtle)'">
+                    <summary style="display:flex; justify-content:space-between; align-items:center; font-weight:700; color:#fff; font-size:16px;">
+                        <span>Is Howilook available on iOS?</span>
+                        <span class="material-symbols-outlined faq-icon" style="color:var(--text-muted);">expand_more</span>
+                    </summary>
+                    <p style="margin-top:14px; font-size:14px; color:var(--text-secondary); line-height:1.6;">
+                        Howilook is currently available on Android via Google Play Early Access. An iOS version is actively in development and coming soon to the App Store.
+                    </p>
+                </details>
+
             </div>
         </div>
     </section>
@@ -1126,7 +1144,7 @@
                         <span>DOWNLOAD FOR ANDROID</span>
                     </a>
                     <div style="font-size:12px; color:var(--text-muted); margin-top:16px;">
-                        Android 8.0+ • Google Play Early Access • 3 Starter Scans Free
+                        Android 8.0+ • Google Play Early Access • 3 Starter Scans Free • iOS Coming Soon
                     </div>
                 </div>
             </div>
